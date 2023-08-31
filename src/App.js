@@ -1,28 +1,41 @@
 import React, {useState} from 'react';
 import './App.css';
+
+import { fetcher } from './fetcher';
+
 import Category from './components/category';
 
 function App() {
-  const [results, setResults] = useState([]);
+  const [categories, setCategories] = useState({errorMessage: '', data: []});
+  const [products, setProducts] = useState({errorMessage: '', data: []});
 
   React.useEffect(() => {
-    fetch("http://localhost:3001/categories")
-    .then(Response => Response.json())
-    .then(data => {
-      console.log(data);
-      setResults(data);
-    })
+    const fetchData = async () => {
+      const responseObject = await fetcher("/categories");
+      setCategories(responseObject);
+    }
+    fetchData();
+
   }, [])
 
-  const renderCategories = () => {
-    // return results.map(c => 
-    //   <Category key={c.id} id={c.id} title={c.title}/>
-    // )//Incase the results does not get called
-    const categories = [];
-    for(let i=0; i < results.length;i++){
-      categories.push(<Category key={results[i].id} id={results[i].id} title={results[i].title}/>)
+  const handleCategoryClick = id =>{
+    const fetchData = async () => {
+      const responseObject = await fetcher("/products?catId=" + id);
+      setProducts(responseObject);
     }
-    return categories;
+    fetchData();
+  }
+
+  const renderCategories = () => {
+    return categories.data.map(c => 
+      <Category key={c.id} id={c.id} title={c.title} onCategoryClick={()=> handleCategoryClick(c.id)}/>
+    )
+  }
+
+  const renderProducts = () => {
+    return products.data.map(p =>
+      <div>{p.title}</div>
+      )
   }
 
   return (
@@ -31,10 +44,13 @@ function App() {
 
       <section>
         <nav>
-        {results && renderCategories()}
+          { categories.errorMessage && <div>Error: {categories.errorMessage}</div>}
+          { categories.data && renderCategories() }
         </nav>
         <article>
-          main area
+        { products.errorMessage && <div>Error: {products.errorMessage}</div>}
+          <h1>Products</h1>
+          { products && renderProducts() }
         </article>
       </section>
 
