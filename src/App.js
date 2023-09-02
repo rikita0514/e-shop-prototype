@@ -5,6 +5,9 @@ import { getCategories, getProducts } from './fetcher';
 
 import Category from './components/category';
 
+import CategoryProduct from './components/categoryProduct';
+
+
 function App() {
   const [categories, setCategories] = useState({errorMessage: '', data: []});
   const [products, setProducts] = useState({errorMessage: '', data: []});
@@ -36,9 +39,7 @@ function App() {
     }
 
     const renderProducts = () => {
-      return products.data.map(p => 
-        <div>{p.title}</div>
-        )
+      return products.data.map(p => <CategoryProduct {...p}>{p.title}</CategoryProduct>);
     }
 
   return (
@@ -49,11 +50,11 @@ function App() {
         { categories.errorMessage && <div>Error: {categories.errorMessage}</div>}
         { categories.data && renderCategories()  }
       </nav>
-      <article>
+      <main>
       { products.errorMessage && <div>Error: {products.errorMessage}</div>}
         <h4>Products</h4>
         { products && renderProducts() }
-      </article>
+      </main>
     </section>
 
     <footer>
