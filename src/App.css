@@ -81,6 +81,8 @@ nav ul li:hover {
 }
 
 main {
+  text-align: center;
+  justify-content: center;
   flex: 0.9;
   padding-top: 20px;
   min-height: 1600px;
@@ -113,7 +115,7 @@ footer a {
 
 .category-product-info-dimensions{
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .category-product-info-capacity{
