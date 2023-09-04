@@ -44,7 +44,7 @@ function App() {
 
   return (
     <>
-    <header>My Store</header>
+    <header>Our Store</header>
     <section>
       <nav>
         { categories.errorMessage && <div>Error: {categories.errorMessage}</div>}
@@ -52,7 +52,7 @@ function App() {
       </nav>
       <main>
       { products.errorMessage && <div>Error: {products.errorMessage}</div>}
-        <h4>Products</h4>
+        
         { products && renderProducts() }
       </main>
     </section>
