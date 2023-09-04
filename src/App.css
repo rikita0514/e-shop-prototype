@@ -20,7 +20,6 @@ header {
   text-align: center;
   font-size: 35px;
   color: white;
-  display: grid;
   grid-template-columns: 0.1fr 0.1fr 1fr 0.1fr;
 }
 
