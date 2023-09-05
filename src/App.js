@@ -16,7 +16,6 @@ function App() {
   React.useEffect(() => {
     const fetchData = async () => {
       const responseObject = await getCategories();
-      debugger;
       setCategories(responseObject);
     }
     fetchData();
@@ -52,8 +51,7 @@ function App() {
       </nav>
       <main>
       { products.errorMessage && <div>Error: {products.errorMessage}</div>}
-        
-        { products && renderProducts() }
+      { products && renderProducts() }
       </main>
     </section>
 

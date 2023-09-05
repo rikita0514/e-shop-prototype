@@ -20,6 +20,7 @@ header {
   text-align: center;
   font-size: 35px;
   color: white;
+
   grid-template-columns: 0.1fr 0.1fr 1fr 0.1fr;
 }
 
@@ -80,11 +81,15 @@ nav ul li:hover {
 }
 
 main {
-  text-align: center;
-  justify-content: center;
   flex: 0.9;
   padding-top: 20px;
-  min-height: 1600px;
+}
+
+article {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.25fr 1fr 0.25fr;
+  column-gap: 20px;
 }
 
 /* Style the footer */
