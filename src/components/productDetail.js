@@ -1,23 +1,26 @@
-import React from 'react'
+import React from 'react';
 
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
 import { getProductById } from '../fetcher';
 
 const ProductDetail = () => {
-    const [ product, setProduct] = React.useState({errorMessage: '', data: {},});
-    const params = useParams();
+    const [product, setProduct] = React.useState({errorMessage: '', data: {},});
+    const { productId } = useParams();
 
     React.useEffect(() => {
         const fetchData =async () => {
-            const responseObject = await getProductById(params.productId);
+            const responseObject = await getProductById(productId);
             setProduct(responseObject);
         }
         fetchData();
-    }, [params.productId]);
+    }, [productId]);
 
+const createMarkup = () => {
+    return { __html: product.data?.description };
+};
 
   return (
     <ProductArticle>
@@ -74,8 +77,7 @@ const ProductDetail = () => {
                 </ProductAction>
             </aside>
 
-            <ProductInfoDesription>
-                {product.data?.description}
+            <ProductInfoDesription dangerouslySetInnerHTML={createMarkup()}>
             </ProductInfoDesription>
         </ProductArticle>
   )

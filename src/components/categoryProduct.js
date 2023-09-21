@@ -4,6 +4,67 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { styled } from 'styled-components';
 
+const CategoryProduct = ({id, title, image, specs,features,price,stock}) => {
+    const navigate = useNavigate();
+
+    return (
+        <ProductArticle>
+            <ProductTitle>
+                <Link to={`products/${id}`}>{title}</Link>
+            </ProductTitle>
+
+            <figure>
+                <ProductImageContainer>
+                    <ProductImageContainerImg src={`/assets/${image}`} alt={title}/>
+                </ProductImageContainer>
+            </figure>
+
+            <aside>
+                <ProductInfo>
+                    <ProductHeader>Dimensions</ProductHeader>
+                    <label>{specs.dimensions}</label>
+                </ProductInfo>
+
+                {specs.capacity && (
+                <ProductInfo>
+                    <ProductHeader>Capacity</ProductHeader>
+                    <label>{specs.capacity}</label>
+                </ProductInfo>
+                )}
+
+                <ProductInfo>
+                    <ProductHeader>Features</ProductHeader>
+                    <ul>
+                        {features?.map((f, i) => {
+                            return <ProductInfoListItem key={`feature${i}`}>{f}</ProductInfoListItem>
+                        })} 
+                    </ul>
+                </ProductInfo>
+            </aside>
+
+            <aside>
+                <ProductInfoFinancePrice>
+                  &#8377;{price}
+                </ProductInfoFinancePrice>
+
+                <ProductInfoStock>
+                <ProductInfoStockLabel>
+                        Stock Level: {stock}
+                    </ProductInfoStockLabel>
+                    <ProductInfoStockLabel>FREE Delivery</ProductInfoStockLabel>
+                </ProductInfoStock>
+
+                <ProductAction>
+                    <ProductActionButton onClick={() => navigate(`products/${id}`)}>View Product</ProductActionButton>
+                    <ProductActionButton>Add to Basket</ProductActionButton>
+                </ProductAction>
+            </aside> 
+        </ProductArticle>
+    )
+}
+
+export default CategoryProduct;
+
 const ProductArticle = styled.article`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -84,64 +145,3 @@ const ProductActionButton = styled.button`
     border: solid 1px slategrey;
     font-weight: bold;
 `;
-
-const CategoryProduct = ({id, title, image, specs,features,price,stock}) => {
-    const navigate = useNavigate();
-
-    return (
-        <ProductArticle>
-            <ProductTitle>
-                <Link to={`products/${id}`}>{title}</Link>
-            </ProductTitle>
-
-            <figure>
-                <ProductImageContainer>
-                    <ProductImageContainerImg src={`/assets/${image}`} alt={title}/>
-                </ProductImageContainer>
-            </figure>
-
-            <aside>
-                <ProductInfo>
-                    <ProductHeader>Dimensions</ProductHeader>
-                    <label>{specs.dimensions}</label>
-                </ProductInfo>
-
-                {specs.capacity && (
-                <ProductInfo>
-                    <ProductHeader>Capacity</ProductHeader>
-                    <label>{specs.capacity}</label>
-                </ProductInfo>
-                )}
-
-                <ProductInfo>
-                    <ProductHeader>Features</ProductHeader>
-                    <ul>
-                        {features?.map((f, i) => {
-                            return <ProductInfoListItem key={`feature${i}`}>{f}</ProductInfoListItem>
-                        })} 
-                    </ul>
-                </ProductInfo>
-            </aside>
-
-            <aside>
-                <ProductInfoFinancePrice>
-                  &#8377;{price}
-                </ProductInfoFinancePrice>
-
-                <ProductInfoStock>
-                <ProductInfoStockLabel>
-                        Stock Level: {stock}
-                    </ProductInfoStockLabel>
-                    <ProductInfoStockLabel>FREE Delivery</ProductInfoStockLabel>
-                </ProductInfoStock>
-
-                <ProductAction>
-                    <ProductActionButton onClick={() => navigate(`products/${id}`)}>View Product</ProductActionButton>
-                    <ProductActionButton>Add to Basket</ProductActionButton>
-                </ProductAction>
-            </aside> 
-        </ProductArticle>
-    )
-}
-
-export default CategoryProduct;
