@@ -83,7 +83,7 @@ const createMarkup = () => {
   )
 }
 
-export default ProductDetail
+export default ProductDetail;
 
 const ProductArticle = styled.article`
     display: grid;

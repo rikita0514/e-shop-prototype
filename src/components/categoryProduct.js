@@ -22,7 +22,7 @@ const CategoryProduct = ({
     return (
         <ProductArticle>
             <ProductTitle>
-                <Link to={`products/${id}`}>{title}</Link>
+                <Link to={`/products/${id}`}>{title}</Link>
             </ProductTitle>
 
             <figure>
@@ -67,7 +67,7 @@ const CategoryProduct = ({
                 </ProductInfoStock>
 
                 <ProductAction>
-                    <ProductActionButton onClick={() => navigate(`products/${id}`)}>View Product</ProductActionButton>
+                    <ProductActionButton onClick={() => navigate(`/products/${id}`)}>View Product</ProductActionButton>
                     <ProductActionButton onClick={() => addProduct({id, title, price})}>Add to Basket</ProductActionButton>
                 </ProductAction>
             </aside> 

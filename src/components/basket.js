@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 
-import { styled } from 'styled-components';
+import styled  from 'styled-components';
 
 import { Link , useNavigate} from 'react-router-dom';
 
 import { CartContext } from "../contexts/cartContext";
 
+import { TrashIcon, UpIcon, DownIcon } from "./icons";
 
 const Basket = () => {
   const navigate = useNavigate();
@@ -15,16 +16,24 @@ const Basket = () => {
     const cartItems = getItems();
 
     if(cartItems.length > 0){
-      return cartItems.map((p) => {
+      return cartItems.map((p) => (
         <React.Fragment key={p.id}>
         <div>
           <Link to={`/products/${p.id}`}>{p.title}</Link>
         </div>
         <BasketQty>
           {p.quantity}
+
+          <UpIcon width={20} ></UpIcon>
+          <DownIcon width={20} ></DownIcon>
+          <TrashIcon
+            width={20}
+          ></TrashIcon>
+
         </BasketQty>
+        <BasketPrice>&#8377;{p.price}</BasketPrice>
         </React.Fragment>
-      });
+      ));
     }
     else{
       return <div>The basket is currently empty</div>
