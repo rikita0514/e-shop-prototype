@@ -20,8 +20,8 @@ header {
   text-align: center;
   font-size: 35px;
   color: white;
-
-  grid-template-columns: 0.1fr 0.1fr 1fr 0.1fr;
+  display: grid;
+  grid-template-columns: 0.1fr 1fr 0.1fr;
 }
 
 header a {

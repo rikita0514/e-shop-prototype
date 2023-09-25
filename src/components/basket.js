@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import styled  from 'styled-components';
 
@@ -9,12 +9,18 @@ import { CartContext } from "../contexts/cartContext";
 import { TrashIcon, UpIcon, DownIcon } from "./icons";
 
 const Basket = () => {
+  const [cartItems, setCartItems] = useState([]);
+
   const navigate = useNavigate();
-  const { getItems } = useContext(CartContext);
+  const { getItems, clearBasket, increaseQuantity, decreaseQuantity, removeProduct } = useContext(CartContext);
+
+  useEffect(() => {
+    setCartItems(getItems());
+  },[getItems]);
+
 
   const renderCart = () => {
-    const cartItems = getItems();
-
+    
     if(cartItems.length > 0){
       return cartItems.map((p) => (
         <React.Fragment key={p.id}>
@@ -24,10 +30,10 @@ const Basket = () => {
         <BasketQty>
           {p.quantity}
 
-          <UpIcon width={20} ></UpIcon>
-          <DownIcon width={20} ></DownIcon>
+          <UpIcon width={20} onClick={() => setCartItems(increaseQuantity({id: p.id}))} ></UpIcon>
+          <DownIcon width={20} onClick={() => setCartItems(decreaseQuantity({id: p.id}))}></DownIcon>
           <TrashIcon
-            width={20}
+            width={20} onClick={() => setCartItems(removeProduct({id: p.id}))}
           ></TrashIcon>
 
         </BasketQty>
@@ -38,11 +44,21 @@ const Basket = () => {
     else{
       return <div>The basket is currently empty</div>
     }
+  };
+
+  const renderTotal = () => {
+    const cartItems = getItems();
+    const total = cartItems.reduce(
+      (total, item) => (total += item.price * item.quantity), 
+        0
+    );
+    return total;
   }
+
   return (
     <BasketContainer>
       <BasketTitle>Shopping Basket</BasketTitle>
-      <BasketButton>CheckOut</BasketButton>
+      <BasketButton onClick={() => navigate('/checkout')}>CheckOut</BasketButton>
       <BasketTable>
         <BasketHeader>
           <h4>Items</h4>
@@ -57,9 +73,9 @@ const Basket = () => {
 
         <BasketHeaderLine />
 
-        <BasketButton>Clear</BasketButton>
-        <BasketTotal>Total: Rs.0</BasketTotal>
       </BasketTable>
+        <BasketButton onClick={() => setCartItems(clearBasket())}>Clear</BasketButton>
+        <BasketTotal>Total: Rs.{renderTotal()}</BasketTotal>
     </BasketContainer>
   );
 };
