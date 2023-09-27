@@ -11,6 +11,8 @@ import Checkout from './components/checkout';
 import Category from './components/category';
 import Layout from './components/layout';
 import Home from './components/home';
+import OrderConfirmation from './components/orderconfirmation';
+import SearchResults from './components/searchResults';
 
 function App() {
   const [categories, setCategories] = useState({
@@ -41,6 +43,8 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="basket" element={<Basket />} />
                 <Route path="checkout" element={<Checkout />} />
+                <Route path="orderconfirmation" element={<OrderConfirmation />} />
+                <Route path="search" element={<SearchResults />} />
                 <Route
                     path="products/:productId"
                     element={<ProductDetail />}
