@@ -1,17 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 
 const Checkout  = () => {
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        shippingAddress1: ''
+    });
   const navigate = useNavigate();
 
-  const confirmOrder = (ev) => {
-    navigate('/orderconfirmation');
+
+  const handleChange = (ev) => {
+    const { name, value } = ev.target;
+
+    setForm((prevState) => {
+        return {
+            ...prevState,
+            [name]: value
+        }
+    })
   };
+
+  const handleSubmit = ev => {
+    navigate('/orderconfirmation');
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
             <CheckoutContainer>
                 {/* Row 1 */}
                 <CheckoutTitle>Shopping Checkout</CheckoutTitle>
@@ -30,13 +48,17 @@ const Checkout  = () => {
                     <CheckoutInput
                         type="text"
                         name="name"
+                        onChange={handleChange}
                         placeholder="Enter name"
+                        required
                     />
                     <CheckoutFormLabel>Email</CheckoutFormLabel>
                     <CheckoutInput
                         type="text"
                         name="email"
+                        onChange={handleChange}
                         placeholder="Enter email"
+                        required
                     />
                 </CheckoutTable>
 
@@ -63,6 +85,7 @@ const Checkout  = () => {
                         <CheckoutInput
                             type="text"
                             name="shippingAddress1"
+                            onChange={handleChange}
                             placeholder="Enter first address line"
                         />
                         <input type="text" name="shippingAddress2" />
@@ -74,7 +97,7 @@ const Checkout  = () => {
                     Cancel
                 </CancelButton>
 
-                <CheckoutButton onClick={confirmOrder}>
+                <CheckoutButton>
                     Confirm Order
                 </CheckoutButton>
             </CheckoutContainer>
