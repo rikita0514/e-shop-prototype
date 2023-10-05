@@ -12,6 +12,12 @@ const Checkout  = () => {
     });
   const navigate = useNavigate();
 
+  const errors ={
+    name: form.name.length === 0,
+    email: form.email.length ===0,
+    shippingAddress1: form.shippingAddress1.length ===0
+    };
+    const disabled = Object.keys(errors).some((x) => errors[x]);
 
   const handleChange = (ev) => {
     const { name, value } = ev.target;
@@ -25,6 +31,10 @@ const Checkout  = () => {
   };
 
   const handleSubmit = ev => {
+    if (disabled){
+        ev.preventDefault();
+        return;
+    }
     navigate('/orderconfirmation');
   }
 
@@ -50,7 +60,6 @@ const Checkout  = () => {
                         name="name"
                         onChange={handleChange}
                         placeholder="Enter name"
-                        required
                     />
                     <CheckoutFormLabel>Email</CheckoutFormLabel>
                     <CheckoutInput
@@ -58,7 +67,6 @@ const Checkout  = () => {
                         name="email"
                         onChange={handleChange}
                         placeholder="Enter email"
-                        required
                     />
                 </CheckoutTable>
 
@@ -86,7 +94,7 @@ const Checkout  = () => {
                             type="text"
                             name="shippingAddress1"
                             onChange={handleChange}
-                            placeholder="Enter first address line"
+                            placeholder="Enter the shipping address"
                         />
                         <input type="text" name="shippingAddress2" />
                         <input type="text" name="shippingCity" />
@@ -97,7 +105,7 @@ const Checkout  = () => {
                     Cancel
                 </CancelButton>
 
-                <CheckoutButton>
+                <CheckoutButton disabled={disabled}>
                     Confirm Order
                 </CheckoutButton>
             </CheckoutContainer>
@@ -138,7 +146,6 @@ const CheckoutTitle = styled.h2`
 
 const CheckoutAddress = styled.div`
     display: grid;
-
     grid-template-rows: 0.25fr 0.25fr 0.25fr 0.25fr;
     grid-template-columns: 1fr;
     grid-row-gap: 10px;
