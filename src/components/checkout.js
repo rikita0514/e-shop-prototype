@@ -54,19 +54,21 @@ const Checkout  = () => {
 
                 {/* Row 6 */}
                 <CheckoutTable>
-                    <CheckoutFormLabel>Name</CheckoutFormLabel>
+                    <CheckoutFormLabel>Name *</CheckoutFormLabel>
                     <CheckoutInput
                         type="text"
                         name="name"
                         onChange={handleChange}
                         placeholder="Enter name"
+                        invalid={errors["name"]}
                     />
-                    <CheckoutFormLabel>Email</CheckoutFormLabel>
+                    <CheckoutFormLabel>Email *</CheckoutFormLabel>
                     <CheckoutInput
                         type="text"
                         name="email"
                         onChange={handleChange}
                         placeholder="Enter email"
+                        invalid={errors["email"]}
                     />
                 </CheckoutTable>
 
@@ -88,13 +90,14 @@ const Checkout  = () => {
                         <input type="text" name="billingAddress2" />
                         <input type="text" name="billingCity" />
                     </CheckoutAddress>
-                    <CheckoutFormLabel>Shipping Address</CheckoutFormLabel>
+                    <CheckoutFormLabel>Shipping Address *</CheckoutFormLabel>
                     <CheckoutAddress>
                         <CheckoutInput
                             type="text"
                             name="shippingAddress1"
                             onChange={handleChange}
                             placeholder="Enter the shipping address"
+                            invalid={errors["shippingAddress1"]}
                         />
                         <input type="text" name="shippingAddress2" />
                         <input type="text" name="shippingCity" />
@@ -156,15 +159,14 @@ const CheckoutFormLabel = styled.label`
 `;
 
 const CheckoutInput = styled.input`
+    ${(props) => props.invalid &&
+        `
+        border-width: 3px;
+        border-color: red;
+    `};
+    
     border-width: 1px;
     border-style: solid;
-
-    ${(props) =>
-        props.invalid &&
-        `
-        border-color: red;
-        border-width: 3px;
-    `}
 `;
 
 const CheckoutFormCheckbox = styled.input`
