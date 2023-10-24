@@ -8,7 +8,12 @@ const Checkout  = () => {
     const [form, setForm] = useState({
         name: '',
         email: '',
-        shippingAddress1: ''
+        shippingAddress1: '',
+        touched: {
+            name: false,
+            email: false,
+            shippingAddress1: false
+        }
     });
   const navigate = useNavigate();
 
@@ -36,7 +41,21 @@ const Checkout  = () => {
         return;
     }
     navigate('/orderconfirmation');
-  }
+  };
+
+  const  handleBlur =(ev) => {
+    const { name } = ev.target;
+
+    setForm((prevState) => {
+        return {
+            ...prevState,
+            touched: { [name]: true}
+
+        }
+    })
+  };
+
+  const showError = field => errors[field]? form.touched[field] : false;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -60,7 +79,8 @@ const Checkout  = () => {
                         name="name"
                         onChange={handleChange}
                         placeholder="Enter name"
-                        invalid={errors["name"]}
+                        invalid={showError("name")}
+                        onBlur={handleBlur}
                     />
                     <CheckoutFormLabel>Email *</CheckoutFormLabel>
                     <CheckoutInput
@@ -68,7 +88,8 @@ const Checkout  = () => {
                         name="email"
                         onChange={handleChange}
                         placeholder="Enter email"
-                        invalid={errors["email"]}
+                        invalid={showError("email")}
+                        onBlur={handleBlur}
                     />
                 </CheckoutTable>
 
@@ -97,7 +118,8 @@ const Checkout  = () => {
                             name="shippingAddress1"
                             onChange={handleChange}
                             placeholder="Enter the shipping address"
-                            invalid={errors["shippingAddress1"]}
+                            invalid={showError("shippingAddress1")}
+                            onBlur={handleBlur}
                         />
                         <input type="text" name="shippingAddress2" />
                         <input type="text" name="shippingCity" />
